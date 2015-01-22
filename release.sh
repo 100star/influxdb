@@ -1,4 +1,8 @@
+#!/bin/bash
+
 # Check that GOPATH is set.
+# Check tree is clean.
+# Build binaries.
 # Check expected binaries exist.
 # Check all error codes.
 # Clean up on exit -- bad or otherwise.

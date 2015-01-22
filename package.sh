@@ -6,6 +6,10 @@ TMP_WORK_DIR=`mktemp -d`
 POST_INSTALL_PATH=`mktemp`
 ARCH=`uname -i`
 
+###########################################################################
+# Helper functions.
+###########################################################################
+
 # usage prints simple usage information.
 usage() {
     echo -e "$0 [<version>] [-h]\n"
@@ -80,7 +84,9 @@ EOF
     echo "Post-install script created successfully at $POST_INSTALL_PATH"
 }
 
+###########################################################################
 # Start the packaging process.
+###########################################################################
 
 if [ $# -ne 1 ]; then
     usage 1

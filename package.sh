@@ -145,12 +145,14 @@ if [ $? -ne 0 ]; then
     echo "Failed to create RPM package -- aborting"
     cleanup_exit 1
 fi
+echo "RPM package created successfully."
 
 echo fpm -s dir -t deb $deb_args --after-install $POST_INSTALL_PATH -n influxdb -v -v $VERSION $TMP_WORK_DIR
 if [ $? -ne 0 ]; then
     echo "Failed to create Debian package -- aborting"
     cleanup_exit 1
 fi
+echo "Debian package created successfully."
 
-echo "Packaging successful."
+echo "Packaging process complete."
 cleanup_exit 0

@@ -140,13 +140,13 @@ else
     debian_package=influxdb_$(VERSION)_amd64.deb
 fi
 
-echo $rpm_args fpm -s dir -t rpm --after-install $TMP_POSTINSTALL -n influxdb -v $VERSION $TMP_WORK_DIR
+echo $rpm_args fpm -s dir -t rpm --after-install $POST_INSTALL_PATH -n influxdb -v $VERSION $TMP_WORK_DIR
 if [ $? -ne 0 ]; then
     echo "Failed to create RPM package -- aborting"
     cleanup_exit 1
 fi
 
-echo fpm -s dir -t deb $deb_args --after-install $TMP_POSTINSTALL -n influxdb -v -v $VERSION $TMP_WORK_DIR
+echo fpm -s dir -t deb $deb_args --after-install $POST_INSTALL_PATH -n influxdb -v -v $VERSION $TMP_WORK_DIR
 if [ $? -ne 0 ]; then
     echo "Failed to create Debian package -- aborting"
     cleanup_exit 1

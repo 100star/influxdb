@@ -54,7 +54,8 @@ update_tree() {
 
 # do_build builds the code.
 do_build() {
-    go build ./...
+    rm $GOPATH/bin/*
+    go install -a ./...
     if [ $? -ne 0 ]; then
         echo "Build failed, unable to create package -- aborting"
         cleanup_exit 1
@@ -76,7 +77,7 @@ fi
 chown -R -L influxdb:influxdb $INFLUXDB_DIR
 chmod -R a+rX $INFLUXDB_DIR
 EOF
-    echo "Post-install script created successfully."
+    echo "Post-install script created successfully at $POST_INSTALL_PATH"
 }
 
 # Start the packaging process.
@@ -89,7 +90,9 @@ else
     VERSION=$1
 fi
 
-check_go_path
+echo -e "\nStarting package process...\n"
+
+check_gopath
 check_clean_tree
 update_tree
 do_build

@@ -121,8 +121,7 @@ if [ "x$response" == "xn" ]; then
     cleanup_exit 1
 fi
 
-
-if [ $ARCH == "386" ]; then
+if [ $ARCH == "i386" ]; then
     rpm_package=influxdb-$(VERSION)-1.i686.rpm
     debian_package=influxdb_$(VERSION)_i686.deb
     deb_args="-a i686"

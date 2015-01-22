@@ -122,14 +122,30 @@ if [ "x$response" == "xn" ]; then
 fi
 
 
-echo fpm -s dir -t rpm --after-install $TMP_POSTINSTALL -n influxdb -v $VERSION $TMP_WORK_DIR
+if [ $ARCH == "386" ]; then
+    rpm_package=influxdb-$(VERSION)-1.i686.rpm
+    debian_package=influxdb_$(VERSION)_i686.deb
+    deb_args="-a i686"
+    rpm_args="setarch i686"
+elif [ $ARCH == "arm" ]; then
+    rpm_package=influxdb-$(VERSION)-1.armel.rpm
+    debian_package=influxdb_$(VERSION)_armel.deb
+else
+    rpm_package=influxdb-$(package_version)-1.x86_64.rpm
+    debian_package=influxdb_$(VERSION)_amd64.deb
+fi
+
+echo $rpm_args fpm -s dir -t rpm --after-install $TMP_POSTINSTALL -n influxdb -v $VERSION $TMP_WORK_DIR
 if [ $? -ne 0 ]; then
     echo "Failed to create RPM package -- aborting"
     cleanup_exit 1
 fi
 
-echo fpm -s dir -t deb -a i686 --after-install $TMP_POSTINSTALL -n influxdb -v -v $VERSION $TMP_WORK_DIR
+echo fpm -s dir -t deb $deb_args --after-install $TMP_POSTINSTALL -n influxdb -v -v $VERSION $TMP_WORK_DIR
 if [ $? -ne 0 ]; then
     echo "Failed to create Debian package -- aborting"
     cleanup_exit 1
 fi
+
+echo "Packaging successful."
+cleanup_exit 0
